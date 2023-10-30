@@ -58,41 +58,41 @@ const index = (req, res, next) => {
           ],
           index: [0],
           data: [
-            // [
-            //   "customerName",
-            //   carrierName,
-            //   transporationMode,
-            //   originName,
-            //   originCity,
-            //   originState,
-            //   originZipCode,
-            //   destinationName,
-            //   destinationCity,
-            //   destinationState,
-            //   destinationZipCode,
-            //   totalPieces,
-            //   totalWeight,
-            //   commodityDescription,
-            // ],
-
-
             [
-              "SAMSUNG SDS AMERICA",
-              "IML",
-              "RKS DSKT WDN",
-              "OTAY SDS YARD",
-              "SAN DIEGO",
-              "CA",
-              "92154",
-              "BALI EXPRESS SERVICES INC",
-              "COSTCO #1257",
-              "COLUMBUS",
-              "OH",
-              "432283600",
-              56,
-              6975,
-             
+              customerName,
+              transporationMode,
+              commodityDescription,
+              originName,
+              originCity,
+              originState,
+              originZipCode,
+              carrierName,
+              destinationName,
+              destinationCity,
+              destinationState,
+              destinationZipCode,
+              totalPieces,
+              totalWeight,
             ],
+
+
+            // [
+            //   "SAMSUNG SDS AMERICA",
+            //   "IML",
+            //   "RKS DSKT WDN",
+            //   "OTAY SDS YARD",
+            //   "SAN DIEGO",
+            //   "CA",
+            //   "92154",
+            //   "BALI EXPRESS SERVICES INC",
+            //   "COSTCO #1257",
+            //   "COLUMBUS",
+            //   "OH",
+            //   "432283600",
+            //   56,
+            //   6975,
+             
+            // ],
 
           //   [
           //     "GE APPLIANCE",
@@ -117,21 +117,12 @@ const index = (req, res, next) => {
       axios
         .post(apiUrl, payloadData, { headers })
         .then(async (response) => {
-          // console.log("API response:", response[0]['0']);
-
-
           const dataValue = response.data;
-            // console.log(dataValue[0]);
-          // Access the values based on your provided format
-          // const value0 = dataValue[0][0]; // Access value 0
-          // console.log(value0)
-          // const value1 = data[1][1]; // Access value 1
-          // for 1 call another api
-
+        
           if (dataValue[0] === 0) {
             console.log("inside the 0 value")
             try {
-              // await Theft.deleteMany({});
+              await Theft.deleteMany({});
               console.log("All data deleted successfully");
 
               res.json({
@@ -146,14 +137,24 @@ const index = (req, res, next) => {
               });
             }
           } else if(dataValue[0] === 1) {
-            
+
+            let config = {
+              method: 'post',
+              maxBodyLength: Infinity,
+              url: 'https://rep1.eastus2.inference.ml.azure.com/score',
+              headers: { 
+                'Content-Type': 'application/json', 
+                'Authorization': 'Bearer tStABYQg0wv3ZZJgIP3bJ9c7M14PduoC'
+              },
+              data : payloadData
+            };
             axios
-              .post(apiUrlSecond, payloadData, { secondHeaders })
+              .request(config)
               .then(async (response) => {
                 console.log("inside the 1 value")
 
                 try {
-                  // await Theft.deleteMany({});
+                  await Theft.deleteMany({});
                   console.log("All data deleted successfully");
 
                   res.json({
