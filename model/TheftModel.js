@@ -28,7 +28,7 @@ const theftSchema = new Schema({
     },
 
     origin_zipCode:{
-        type:Number
+        type:String
     },
 
     destination_name:{
@@ -44,15 +44,15 @@ const theftSchema = new Schema({
     },
 
     destination_zipCode:{
-        type:Number
+        type:String
     },
 
     total_pieces:{
-        type:Number
+        type:String
     },
 
     total_weight:{
-        type:Number
+        type:String
     },
 
     commodity_description:{
